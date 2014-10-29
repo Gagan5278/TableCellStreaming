@@ -16,7 +16,15 @@
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ZOH-kZ-FEJ" id="wxC-BI-CoL">
                 <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RvT-0s-Kbt">
+                        <rect key="frame" x="0.0" y="0.0" width="410" height="319"/>
+                    </imageView>
+                </subviews>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="thumbNailImageView" destination="RvT-0s-Kbt" id="5dy-R9-6Ul"/>
+            </connections>
             <point key="canvasLocation" x="235" y="401"/>
         </tableViewCell>
     </objects>
