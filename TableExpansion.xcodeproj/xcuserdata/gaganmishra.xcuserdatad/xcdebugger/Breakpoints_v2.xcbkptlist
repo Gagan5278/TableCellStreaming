@@ -20,27 +20,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TableExpansion/ViewController/ViewController.m"
-            timestampString = "436262213.657032"
+            timestampString = "436263638.987924"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "158"
-            endingLineNumber = "158"
-            landmarkName = "-loadImageInBackground:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TableExpansion/ViewController/ViewController.m"
-            timestampString = "436262217.732775"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "163"
-            endingLineNumber = "163"
+            startingLineNumber = "161"
+            endingLineNumber = "161"
             landmarkName = "-loadImageInBackground:"
             landmarkType = "5">
          </BreakpointContent>
