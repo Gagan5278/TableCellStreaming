@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>78D54009-BB73-448D-A396-E6CB6EE97313</string>
+	<key>IDESourceControlProjectName</key>
+	<string>TableExpansion</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>7FF53DE10ECB6B856F28D8457E4F5AE897010455</key>
+		<string>https://github.com/Gagan5278/TableCellStreaming.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>TableExpansion.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>7FF53DE10ECB6B856F28D8457E4F5AE897010455</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/Gagan5278/TableCellStreaming.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>7FF53DE10ECB6B856F28D8457E4F5AE897010455</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>7FF53DE10ECB6B856F28D8457E4F5AE897010455</string>
+			<key>IDESourceControlWCCName</key>
+			<string>TableExpansion</string>
+		</dict>
+	</array>
+</dict>
+</plist>

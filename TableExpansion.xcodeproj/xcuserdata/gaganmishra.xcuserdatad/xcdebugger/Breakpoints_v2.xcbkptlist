@@ -20,12 +20,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TableExpansion/ViewController/ViewController.m"
-            timestampString = "436200321.986668"
+            timestampString = "436262213.657032"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "78"
-            endingLineNumber = "78"
-            landmarkName = "-tableView:cellForRowAtIndexPath:"
+            startingLineNumber = "158"
+            endingLineNumber = "158"
+            landmarkName = "-loadImageInBackground:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -36,12 +36,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TableExpansion/ViewController/ViewController.m"
-            timestampString = "436200321.986668"
+            timestampString = "436262217.732775"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "81"
-            endingLineNumber = "81"
-            landmarkName = "-tableView:cellForRowAtIndexPath:"
+            startingLineNumber = "163"
+            endingLineNumber = "163"
+            landmarkName = "-loadImageInBackground:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
