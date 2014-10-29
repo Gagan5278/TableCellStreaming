@@ -16,6 +16,7 @@
     BOOL isScrolling;
     AVPlayerItem *tempPlayer;
     UIActivityIndicatorView *activity;
+    NSMutableDictionary *dictOfImages;    //Use this Dictionary for avoiding Extra loading of images from URL
 }
 @end
 
@@ -27,6 +28,7 @@
     activity=[[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     activity.hidesWhenStopped=YES;
     // Do any additional setup after loading the view, typically from a nib.
+    dictOfImages=[NSMutableDictionary dictionary];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -71,13 +73,14 @@
         default:
             break;
     }
-     if (fullvisible && index == indexPath.row)
+    if (fullvisible && index == indexPath.row)
     {
         if (!isScrolling) {
+            [cell.thumbNailImageView removeFromSuperview];
             NSURL *url = [NSURL URLWithString:videoURLStr];//[NSURL fileURLWithPath:videoURLStr];
             if(!url)
             {
-                 videoURLStr=[[NSBundle mainBundle]pathForResource:@"video_4" ofType:@"mp4"];
+                videoURLStr=[[NSBundle mainBundle]pathForResource:@"video_4" ofType:@"mp4"];
                 url=[NSURL fileURLWithPath:videoURLStr];
             }
             cell.videoItem = [AVPlayerItem playerItemWithURL:url];
@@ -96,17 +99,24 @@
             //            isScrolling=NO;
             activity.center=cell.center;
             [activity startAnimating];
-           [cell.contentView addSubview:activity];
+            [cell.contentView addSubview:activity];
         }
     }
     else
     {
+        NSURL *url = [NSURL URLWithString:videoURLStr];//[NSURL fileURLWithPath:videoURLStr];
+        if(!url)
+        {
+            videoURLStr=[[NSBundle mainBundle]pathForResource:@"video_4" ofType:@"mp4"];
+            url=[NSURL fileURLWithPath:videoURLStr];
+        }
+        //Pass your local video URL or Thumbnail Image URL for showing thumbnail
+        NSArray *arr = [[NSArray alloc] initWithObjects:url,indexPath, nil];
+        [self performSelectorInBackground:@selector(loadImageInBackground:) withObject:arr];
         [cell.avLayer removeFromSuperlayer];
-         cell.videoItem = nil;
+        cell.videoItem = nil;
         [cell.videoPlayer pause];
-         cell.videoPlayer = nil;
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:AVPlayerItemPlaybackStalledNotification object:nil];
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
+        cell.videoPlayer = nil;
     }
     return cell;
 }
@@ -114,6 +124,51 @@
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
+}
+
+- (void) loadImageInBackground:(NSArray *)urlAndTagReference
+{
+    //------------------------------------------Uncomment Below code if you are using Local Video Files--------------------------------------------------------------------
+    /*
+     NSURL *imgUrl=[urlAndTagReference objectAtIndex:0];
+     dispatch_queue_t  imageQueue_ = dispatch_queue_create("com.aequor.app.imageQueue", NULL);
+     dispatch_async(imageQueue_, ^{
+     // AVAssetImageGenerator
+     AVAsset *asset = [[AVURLAsset alloc] initWithURL:imgUrl options:nil];;
+     AVAssetImageGenerator *imageGenerator = [[AVAssetImageGenerator alloc] initWithAsset:asset];
+     imageGenerator.appliesPreferredTrackTransform = YES;
+     // calc midpoint time of video
+     Float64 durationSeconds = CMTimeGetSeconds([asset duration]);
+     CMTime midpoint = CMTimeMakeWithSeconds(durationSeconds/2.0, 600);
+     // get the image from
+     NSError *error = nil;
+     CMTime actualTime;
+     CGImageRef halfWayImage = [imageGenerator copyCGImageAtTime:midpoint actualTime:&actualTime error:&error];
+     UIImage *img= [[UIImage alloc] initWithCGImage:halfWayImage];
+     dispatch_async(dispatch_get_main_queue(), ^{
+     VideoCell *cell = (VideoCell*)[self.animateTableView cellForRowAtIndexPath:[urlAndTagReference objectAtIndex:1]];
+     cell.thumbNailImageView.image=img;
+     });
+     });
+     */
+    
+    //------------------------------------------Below code if you are using thumbnail URL for Video Files--------------------------------------------------------------------
+    NSURL *imgURL=[NSURL URLWithString:@"http://pagead2.googlesyndication.com/simgad/8447710804836610390"];  //Pass Your Thumbnail URL
+    VideoCell *cell = (VideoCell*)[self.animateTableView cellForRowAtIndexPath:[urlAndTagReference objectAtIndex:1]];
+    if([dictOfImages objectForKey:imgURL]!=nil)
+    {
+        cell.thumbNailImageView.image=(UIImage*)[dictOfImages objectForKey:imgURL];
+    }
+    else{
+        dispatch_queue_t  imageQueue_ = dispatch_queue_create("com.aequor.app.imageQueue", NULL);
+        dispatch_async(imageQueue_, ^{
+            UIImage *image=[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://pagead2.googlesyndication.com/simgad/8447710804836610390"]]];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                cell.thumbNailImageView.image=image;
+                [dictOfImages setObject:image forKey:imgURL];
+            });
+        });
+    }
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
