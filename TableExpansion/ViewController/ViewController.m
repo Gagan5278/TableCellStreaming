@@ -157,7 +157,9 @@
     VideoCell *cell = (VideoCell*)[self.animateTableView cellForRowAtIndexPath:[urlAndTagReference objectAtIndex:1]];
     if([dictOfImages objectForKey:imgURL]!=nil)
     {
-        cell.thumbNailImageView.image=(UIImage*)[dictOfImages objectForKey:imgURL];
+        dispatch_async(dispatch_get_main_queue(), ^{
+           cell.thumbNailImageView.image=(UIImage*)[dictOfImages objectForKey:imgURL];
+        });
     }
     else{
         dispatch_queue_t  imageQueue_ = dispatch_queue_create("com.aequor.app.imageQueue", NULL);
@@ -181,18 +183,18 @@
     {
     }
 }
+/*
+ -(void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+ {
+ }
+ */
 
--(void)itemDidBufferPlaying:(id)object
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"Buffering");
+    return 320;
 }
 
--(void)itemDidFinishPlaying:(id)object
-{
-    NSLog(@"Finishing");
-    
-}
-
+#pragma mark-Scroll Delegates
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     isScrolling = NO;
     NSArray* cells = self.animateTableView.visibleCells;
@@ -203,7 +205,7 @@
             NSIndexPath *path = [self.animateTableView indexPathForCell:cell] ;
             index = path.row;
             fullvisible = YES;
-            [self.animateTableView reloadData];
+            [self.animateTableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:path ,nil] withRowAnimation:UITableViewRowAnimationAutomatic];
             break;
         }
         else
@@ -211,10 +213,7 @@
             fullvisible = NO;
         }
     }
-    //    [self.animateTableView reloadData];
 }
-
-
 
 -(void)scrollViewWillBeginDragging:(UIScrollView *)aScrollView
 {
@@ -229,77 +228,15 @@
     index = -1;
 }
 
-- (void)scrollViewDidScroll:(UIScrollView *)aScrollView
+#pragma mark-Video Player Observer
+-(void)itemDidBufferPlaying:(id)object
 {
-    //    NSArray* cells = self.animateTableView.visibleCells;
-    //    for (VideoCell* cell in cells)
-    //    {
-    //        if (cell.frame.origin.y > 30 &&cell.frame.origin.y + cell.frame.size.height < 30 +[UIScreen mainScreen].bounds.size.height)
-    //        {
-    //            NSIndexPath *path = [self.animateTableView indexPathForCell:cell] ;
-    //            index = path.row;
-    //            fullvisible = YES;
-    //            [self.animateTableView reloadData];
-    //        }
-    //        else
-    //        {
-    //            fullvisible = NO;
-    //        }
-    //    }
+    NSLog(@"Buffering");
 }
 
-- (BOOL)isIndexPathVisible:(NSIndexPath*)indexPath
+-(void)itemDidFinishPlaying:(id)object
 {
-    NSArray *visiblePaths = [self.animateTableView indexPathsForVisibleRows];
-    for (NSIndexPath *currentIndex in visiblePaths)
-    {
-        NSComparisonResult result = [currentIndex compare:currentIndex];
-        
-        if(result == NSOrderedSame)
-        {
-            NSLog(@"Visible");
-            return YES;
-        }
-    }
-    return NO;
-}
-
-/*
- -(void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
- {
- UITableViewCell *cell=[tableView cellForRowAtIndexPath:indexPath];
- 
- if(selectedIndexPath)
- {
- selectedIndexPath=nil;
- //        for(UIView *view in cell.subviews)
- //        {
- //            if([view isKindOfClass:[UIView class]])
- //            {
- //                [view removeFromSuperview];
- //            }
- //        }
- //        [self.animateTableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil] withRowAnimation:UITableViewRowAnimationFade];
- [tableView reloadData];
- }
- selectedIndexPath=indexPath;
- [self performSelector:@selector(ExpandCellAtCell:) withObject:cell];
- }
- */
-
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return 320;
-}
-
--(void)ExpandCellAtCell:(UITableViewCell*)cell
-{
-    [self.animateTableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:selectedIndexPath, nil] withRowAnimation:UITableViewRowAnimationAutomatic];
-    
-    [UIView transitionWithView:cell duration:0.5 options:UIViewAnimationOptionAutoreverse animations:^{
-    } completion:^(BOOL finished) {
-        cell.frame=CGRectMake(cell.frame.origin.x, cell.frame.origin.y, cell.frame.size.width, 88);
-    }];
+    NSLog(@"Finishing");
 }
 
 @end
