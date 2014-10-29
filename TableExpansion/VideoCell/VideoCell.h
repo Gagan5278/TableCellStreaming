@@ -12,4 +12,5 @@
 @property(nonatomic,strong)AVPlayer *videoPlayer;
 @property(nonatomic, strong)AVPlayerLayer  *avLayer;
 @property(nonatomic,strong)AVPlayerItem  *videoItem;
+@property (weak, nonatomic) IBOutlet UIImageView *thumbNailImageView;
 @end
